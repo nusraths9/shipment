@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert JSON Data to HTML Table</title>
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+    <input type="button" onclick="CreateTableFromJSON()" value="Create Table From JSON" />
+    <p id="showData"></p>
+    <button>Transpose</button>
+</body>
+
+<script>
+    function CreateTableFromJSON() {
+        var myBooks = [
+            {
+                "Day" : "Sun",
+				"Date" : "Jul 28",
+				"Cost" : "100"
+            },
+            {
+                "Day" : "Mon",
+				"Date" : "Jul 28",
+				"Cost" : "100"
+            },
+            {
+                "Day" : "Tue",
+				"Date" : "Jul 28",
+				"Cost" : "100"
+            },
+            {
+                "Day" : "Wed",
+				"Date" : "Jul 28",
+				"Cost" : "100"
+            },
+            {
+                "Day" : "Thu",
+				"Date" : "Jul 28",
+				"Cost" : "100"
+            },
+            {
+                "Day" : "Fri",
+				"Date" : "Jul 28",
+				"Cost" : "100"
+            },
+            {
+                "Day" : "Sat",
+				"Date" : "Jul 28",
+				"Cost" : "100"
+            }
+        ]
+
+        // EXTRACT VALUE FOR HTML HEADER. 
+        // ('Book ID', 'Book Name', 'Category' and 'Price')
+        var col = [];
+        for (var i = 0; i < myBooks.length; i++) {
+            for (var key in myBooks[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+        console.log(col)
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+        var tr = table.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            tr = table.insertRow(-1);
+            for (var j = 0; j < myBooks.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                // console.log(myBooks[i], myBooks)
+                tabCell.innerHTML = myBooks[j][col[i]];
+            }
+
+
+        }
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+    }
+    
+</script>
+</html>
